@@ -1,4 +1,4 @@
-# [STA1383 - Data Challenge](https://krs.ipb.ac.id/mk/175738)https://krs.ipb.ac.id/mk/175738
+# [STA1383 - Data Challenge](https://krs.ipb.ac.id/mk/175738)
 `SKS: 3 (2-1)`  
   
 ### Deskripsi Mata Kuliah
