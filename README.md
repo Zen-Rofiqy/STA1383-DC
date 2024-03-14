@@ -9,3 +9,7 @@ Mata kuliah ini merupakan mata kuliah praktikum dimana mahasiswa akan diberikan 
 #### Mata Kuliah Prasyarat:
 [`STA1231 - Analisis Regresi`](https://krs.ipb.ac.id/mk/167366)  
 [`STA1271 - Komputasi Statistika`](https://krs.ipb.ac.id/mk/175731)
+
+## Important Links
+* [Class Notes](https://docs.google.com/document/d/1f6RNNas556WT7F34wL235J6QyrV1uuCS81ske11Bjlc/edit#heading=h.3t83b9o3555t)
+* [Class Google Srpeadheet](https://docs.google.com/spreadsheets/d/1ROvJVHfOsWkpe8ZWtEGb3b3G4tjMLn7j9646UTpMcxA/edit#gid=0)
