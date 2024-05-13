@@ -294,12 +294,12 @@ ggsave("2.c_Cd_EU.png", chart, path = export.chart,
 ```{r fig.height=10, fig.width=17, dpi=300}
 chart <- ggplot(data[1:36,], aes(x = reorder(Kode, Cd), y = Cd)) +
   geom_col(fill="#347ea1", width = 0.5) + 
-  labs(x = "Kode Sampel", y = "Merkuri 202 (ng/L)") + 
+  labs(x = "Kode Sampel", y = "Kadmium 111 (ng/L)") + 
   theme.point
 
 chart
 #Export Chart
-ggsave("2.b_Hg_EU_Bar.png", chart, path = export.chart,
+ggsave("2.c_Cd_EU_Bar.png", chart, path = export.chart,
         dpi = 300, height = 10, width = 17)
 ```
 
@@ -336,6 +336,18 @@ ggsave("1.d_Sb_BPOM.png", chart, path = export.chart,
         dpi = 300, height = 10, width = 13)
 ```
 
+```{r fig.height=10, fig.width=13, dpi=300}
+chart <- ggplot(data[37:60,], aes(x = reorder(Kode, Sb), y = Sb)) +
+  geom_col(fill="#347ea1", width = 0.5) + 
+  labs(x = "Kode Sampel", y = "Antimon 121 (ng/L)") + 
+  theme.point
+
+chart
+#Export Chart
+ggsave("1.d_Sb_BPOM_Bar.png", chart, path = export.chart,
+        dpi = 300, height = 10, width = 13)
+```
+
 ## Sb. EU
 
 ```{r fig.height=10, fig.width=17, dpi=300}
@@ -349,5 +361,17 @@ ggplot(data[1:36,], aes(x = Kode, y = Sb, fill = `Jenis Plastik`)) +
 chart
 #Export Chart
 ggsave("2.d_Sb_EU.png", chart, path = export.chart,
+        dpi = 300, height = 10, width = 17)
+```
+
+```{r fig.height=10, fig.width=17, dpi=300}
+chart <- ggplot(data[1:36,], aes(x = reorder(Kode, Sb), y = Sb)) +
+  geom_col(fill="#347ea1", width = 0.5) + 
+  labs(x = "Kode Sampel", y = "Antimon 121 (ng/L)") + 
+  theme.point
+
+chart
+#Export Chart
+ggsave("2.d_Sb_EU_Bar.png", chart, path = export.chart,
         dpi = 300, height = 10, width = 17)
 ```
