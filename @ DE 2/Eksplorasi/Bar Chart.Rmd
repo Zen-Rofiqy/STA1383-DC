@@ -87,7 +87,7 @@ color.e <- c("#db424d","#04a390","#3b8bff","#f2cc2c","#f2cc2c","#f2cc2c")
 
 # 1. Pb
 
-```{r fig.height=10, fig.width=25, dpi=300}
+```{r fig.height=10, fig.width=25, message=FALSE, warning=FALSE, dpi=300}
 chart <-
 ggplot(data, aes(x = Kode, y = Pb, fill = `Jenis Plastik`)) +
   geom_point(shape = 23, color = "black", size = 10, stroke=2) +  
