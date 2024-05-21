@@ -1,0 +1,377 @@
+---
+title: "Bar Chart"
+author: "Angga Fathan Rofiqy"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  rmdformats::downcute:
+    self_contained: true
+    thumbnails: false
+    lightbox: true
+    gallery: true
+    highlight: tango
+    code_folding: hide
+    toc_depth: 3
+    number_sections: true
+    toc_float:
+      collapsed: true
+      smooth_scroll: true
+    fig_caption: true
+pkgdown:
+  as_is: true
+---
+
+```{r setup, include=FALSE, echo=FALSE, warning=FALSE, message = FALSE}
+#                      -=( Install & Load Package Function )=-
+install_load <- function (package1, ...)  {   
+
+   # convert arguments to vector
+   packages <- c(package1, ...)
+
+   # start loop to determine if each package is installed
+   for(package in packages){
+
+       # if package is installed locally, load
+       if(package %in% rownames(installed.packages()))
+          do.call('library', list(package))
+
+       # if package is not installed locally, download, then load
+       else {
+          install.packages(package)
+          do.call("library", list(package))
+       }
+   } 
+}
+
+path <- function() gsub  ( "\\\\",  "/",  readClipboard ()  )
+
+install_load("readxl","ggplot2","dplyr")
+
+export.chart <- "C:/Users/Fathan/Documents/Obsidian Vault/2. Kuliah/Smt 6/4. Data Challange/@ DE 2/Eksplorasi/Chart"
+```
+
+```{r , include=FALSE, echo=FALSE, warning=FALSE, message = FALSE}
+#Set Working Directory
+require("knitr")
+opts_knit$set(root.dir = "C:/Users/Fathan/Documents/Obsidian Vault/2. Kuliah/Smt 6/4. Data Challange/@ DE 2/Eksplorasi")
+```
+
+```{r}
+data <- read_excel("Data.xlsx") %>% as.data.frame()
+head(data, n=10)
+```
+
+```{r}
+theme.point <- list(
+  guides(fill="none"),
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, 
+                                   margin = margin(b = 10, t=20)),
+        axis.text.y = element_text(vjust = 1, face = "bold", 
+                                   margin = margin(l = 20, r = 20)),
+        plot.title = element_text(hjust = 0.5, face = "bold"),
+        text = element_text(size = 30),
+        plot.subtitle = element_text(hjust = 0.5),
+        panel.background = element_rect(fill = 'transparent'),
+        plot.background = element_rect(fill='transparent', color=NA),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        axis.line = element_line(linewidth = 2, colour = "black"))
+        ) 
+
+color.bar <- data.frame(plastik = unique(data[,2]),
+              warna = c("#003366","#174978","#2f5f8a","#46769b","#5e8cad","#75a2bf",
+                        "#ffb170","#ff9232","#ff6f01","#ff5904")) %>%
+            arrange(desc(row_number()))
+color.b <- c("#db424d","#04a390","#3b8bff","#f2cc2c")
+color.e <- c("#db424d","#04a390","#3b8bff","#f2cc2c","#f2cc2c","#f2cc2c")
+```
+
+# 1. Pb
+
+```{r fig.height=10, fig.width=25, message=FALSE, warning=FALSE, dpi=300}
+chart <-
+ggplot(data, aes(x = Kode, y = Pb, fill = `Jenis Plastik`)) +
+  geom_point(shape = 23, color = "black", size = 10, stroke=2) +  
+  labs(x = "Kode Sampel", y = "Timbal 208 (ng/L)") + 
+  scale_fill_manual(values = color.bar$warna) + 
+  theme.point
+
+chart
+#Export Chart
+ggsave("a_Pb_Gabung.png", chart, path = export.chart,
+        dpi = 300, height = 10, width = 25)
+```
+
+## Pb. BPOM
+
+```{r fig.height=10, fig.width=13, dpi=300}
+chart <-
+ggplot(data[37:60,], aes(x = Kode, y = Pb, fill = `Jenis Plastik`)) +
+  geom_point(shape = 23, color = "black", size = 10, stroke=2) +  
+  labs(x = "Kode Sampel", y = "Timbal 208 (ng/L)") + 
+  scale_fill_manual(values = color.b) + 
+  theme.point
+
+chart
+#Export Chart
+ggsave("1.a_Pb_BPOM.png", chart, path = export.chart,
+        dpi = 300, height = 10, width = 13)
+```
+
+```{r fig.height=10, fig.width=13, dpi=300}
+chart <- ggplot(data[37:60,], aes(x = reorder(Kode, Pb), y = Pb)) +
+  geom_col(fill="#347ea1", width = 0.5) + 
+  labs(x = "Kode Sampel", y = "Timbal 208 (ng/L)") + 
+  theme.point
+
+chart
+#Export Chart
+ggsave("1.a_Pb_BPOM_Bar.png", chart, path = export.chart,
+        dpi = 300, height = 10, width = 13)
+```
+
+## Pb. EU
+
+```{r fig.height=10, fig.width=17, dpi=300}
+chart <-
+ggplot(data[1:36,], aes(x = Kode, y = Pb, fill = `Jenis Plastik`)) +
+  geom_point(shape = 23, color = "black", size = 10, stroke=2) +  
+  labs(x = "Kode Sampel", y = "Timbal 208 (ng/L)") + 
+  scale_fill_manual(values = color.e) + 
+  theme.point
+
+chart
+#Export Chart
+ggsave("2.a_Pb_EU.png", chart, path = export.chart,
+        dpi = 300, height = 10, width = 17)
+```
+
+```{r fig.height=10, fig.width=17, dpi=300}
+chart <- ggplot(data[1:36,], aes(x = reorder(Kode, Pb), y = Pb)) +
+  geom_col(fill="#347ea1", width = 0.5) + 
+  labs(x = "Kode Sampel", y = "Timbal 208 (ng/L)") + 
+  theme.point
+
+chart
+#Export Chart
+ggsave("2.a_Pb_EU_Bar.png", chart, path = export.chart,
+        dpi = 300, height = 10, width = 17)
+```
+
+# 2. Hg
+
+```{r fig.height=10, fig.width=25, dpi=300}
+chart <-
+ggplot(data, aes(x = Kode, y = Hg, fill = `Jenis Plastik`)) +
+  geom_point(shape = 23, color = "black", size = 10, stroke=2) +  
+  labs(x = "Kode Sampel", y = "Merkuri 202 (ng/L)") + 
+  scale_fill_manual(values = color.bar$warna) + 
+  scale_y_continuous(breaks = seq(0, 600, by = 100)) +
+  theme.point
+
+chart
+#Export Chart
+ggsave("b_Hg_Gabung.png", chart, path = export.chart,
+        dpi = 300, height = 10, width = 25)
+```
+
+## Hg. BPOM
+
+```{r fig.height=10, fig.width=13, dpi=300}
+chart <-
+ggplot(data[37:60,], aes(x = Kode, y = Hg, fill = `Jenis Plastik`)) +
+  geom_point(shape = 23, color = "black", size = 10, stroke=2) +  
+  labs(x = "Kode Sampel", y = "Merkuri 202 (ng/L)") + 
+  scale_fill_manual(values = color.b) + 
+  theme.point
+
+chart
+#Export Chart
+ggsave("1.b_Hg_BPOM.png", chart, path = export.chart,
+        dpi = 300, height = 10, width = 13)
+```
+
+```{r fig.height=10, fig.width=13, dpi=300}
+chart <- ggplot(data[37:60,], aes(x = reorder(Kode, Hg), y = Hg)) +
+  geom_col(fill="#347ea1", width = 0.5) + 
+  labs(x = "Kode Sampel", y = "Merkuri 202 (ng/L)") + 
+  theme.point
+
+chart
+#Export Chart
+ggsave("1.b_Hg_BPOM_Bar.png", chart, path = export.chart,
+        dpi = 300, height = 10, width = 13)
+```
+
+## Hg. EU
+
+```{r fig.height=10, fig.width=17, dpi=300}
+chart <-
+ggplot(data[1:36,], aes(x = Kode, y = Hg, fill = `Jenis Plastik`)) +
+  geom_point(shape = 23, color = "black", size = 10, stroke=2) +  
+  labs(x = "Kode Sampel", y = "Merkuri 202 (ng/L)") + 
+  scale_fill_manual(values = color.e) + 
+  theme.point
+
+chart
+#Export Chart
+ggsave("2.b_Hg_EU.png", chart, path = export.chart,
+        dpi = 300, height = 10, width = 17)
+```
+
+```{r fig.height=10, fig.width=17, dpi=300}
+chart <- ggplot(data[1:36,], aes(x = reorder(Kode, Hg), y = Hg)) +
+  geom_col(fill="#347ea1", width = 0.5) + 
+  labs(x = "Kode Sampel", y = "Merkuri 202 (ng/L)") + 
+  theme.point
+
+chart
+#Export Chart
+ggsave("2.b_Hg_EU_Bar.png", chart, path = export.chart,
+        dpi = 300, height = 10, width = 17)
+```
+
+# 3. Cd
+
+```{r fig.height=10, fig.width=25, dpi=300}
+chart <-
+ggplot(data, aes(x = Kode, y = Cd, fill = `Jenis Plastik`)) +
+  geom_point(shape = 23, color = "black", size = 10, stroke=2) +  
+  labs(x = "Kode Sampel", y = "Kadmium 111 (ng/L)") + 
+  scale_fill_manual(values = color.bar$warna) + 
+  scale_y_continuous(breaks = seq(0, 30, by = 5)) +
+  theme.point
+
+chart
+#Export Chart
+ggsave("c_Cd_Gabung.png", chart, path = export.chart,
+        dpi = 300, height = 10, width = 25)
+```
+
+## Cd. BPOM
+
+```{r fig.height=10, fig.width=13, dpi=300}
+chart <-
+ggplot(data[37:60,], aes(x = Kode, y = Cd, fill = `Jenis Plastik`)) +
+  geom_point(shape = 23, color = "black", size = 10, stroke=2) +  
+  labs(x = "Kode Sampel", y = "Kadmium 111 (ng/L)") + 
+  scale_fill_manual(values = color.b) + 
+  theme.point
+
+chart
+#Export Chart
+ggsave("1.c_Cd_BPOM.png", chart, path = export.chart,
+        dpi = 300, height = 10, width = 13)
+```
+
+```{r fig.height=10, fig.width=13, dpi=300}
+chart <- ggplot(data[37:60,], aes(x = reorder(Kode, Cd), y = Cd)) +
+  geom_col(fill="#347ea1", width = 0.5) + 
+  labs(x = "Kode Sampel", y = "Kadmium 111 (ng/L)") + 
+  theme.point
+
+chart
+#Export Chart
+ggsave("1.c_Cd_BPOM_Bar.png", chart, path = export.chart,
+        dpi = 300, height = 10, width = 13)
+```
+
+## Cd. EU
+
+```{r fig.height=10, fig.width=17, dpi=300}
+chart <-
+ggplot(data[1:36,], aes(x = Kode, y = Cd, fill = `Jenis Plastik`)) +
+  geom_point(shape = 23, color = "black", size = 10, stroke=2) +  
+  labs(x = "Kode Sampel", y = "Kadmium 111 (ng/L)") + 
+  scale_fill_manual(values = color.e) + 
+  theme.point
+
+chart
+#Export Chart
+ggsave("2.c_Cd_EU.png", chart, path = export.chart,
+        dpi = 300, height = 10, width = 17)
+```
+
+```{r fig.height=10, fig.width=17, dpi=300}
+chart <- ggplot(data[1:36,], aes(x = reorder(Kode, Cd), y = Cd)) +
+  geom_col(fill="#347ea1", width = 0.5) + 
+  labs(x = "Kode Sampel", y = "Kadmium 111 (ng/L)") + 
+  theme.point
+
+chart
+#Export Chart
+ggsave("2.c_Cd_EU_Bar.png", chart, path = export.chart,
+        dpi = 300, height = 10, width = 17)
+```
+
+# 4. Sb
+
+```{r fig.height=10, fig.width=25, dpi=300}
+chart <-
+ggplot(data, aes(x = Kode, y = Sb, fill = `Jenis Plastik`)) +
+  geom_point(shape = 23, color = "black", size = 10, stroke=2) +  
+  labs(x = "Kode Sampel", y = "Antimon 121 (ng/L)") + 
+  scale_fill_manual(values = color.bar$warna) + 
+  scale_y_continuous(breaks = seq(0, 6000, by = 1000)) +
+  theme.point
+
+chart
+#Export Chart
+ggsave("d_Sb_Gabung.png", chart, path = export.chart,
+        dpi = 300, height = 10, width = 25)
+```
+
+## Sb. BPOM
+
+```{r fig.height=10, fig.width=13, dpi=300}
+chart <-
+ggplot(data[37:60,], aes(x = Kode, y = Sb, fill = `Jenis Plastik`)) +
+  geom_point(shape = 23, color = "black", size = 10, stroke=2) +  
+  labs(x = "Kode Sampel", y = "Antimon 121 (ng/L)") + 
+  scale_fill_manual(values = color.b) + 
+  theme.point
+
+chart
+#Export Chart
+ggsave("1.d_Sb_BPOM.png", chart, path = export.chart,
+        dpi = 300, height = 10, width = 13)
+```
+
+```{r fig.height=10, fig.width=13, dpi=300}
+chart <- ggplot(data[37:60,], aes(x = reorder(Kode, Sb), y = Sb)) +
+  geom_col(fill="#347ea1", width = 0.5) + 
+  labs(x = "Kode Sampel", y = "Antimon 121 (ng/L)") + 
+  theme.point
+
+chart
+#Export Chart
+ggsave("1.d_Sb_BPOM_Bar.png", chart, path = export.chart,
+        dpi = 300, height = 10, width = 13)
+```
+
+## Sb. EU
+
+```{r fig.height=10, fig.width=17, dpi=300}
+chart <-
+ggplot(data[1:36,], aes(x = Kode, y = Sb, fill = `Jenis Plastik`)) +
+  geom_point(shape = 23, color = "black", size = 10, stroke=2) +  
+  labs(x = "Kode Sampel", y = "Antimon 121 (ng/L)") + 
+  scale_fill_manual(values = color.e) + 
+  theme.point
+
+chart
+#Export Chart
+ggsave("2.d_Sb_EU.png", chart, path = export.chart,
+        dpi = 300, height = 10, width = 17)
+```
+
+```{r fig.height=10, fig.width=17, dpi=300}
+chart <- ggplot(data[1:36,], aes(x = reorder(Kode, Sb), y = Sb)) +
+  geom_col(fill="#347ea1", width = 0.5) + 
+  labs(x = "Kode Sampel", y = "Antimon 121 (ng/L)") + 
+  theme.point
+
+chart
+#Export Chart
+ggsave("2.d_Sb_EU_Bar.png", chart, path = export.chart,
+        dpi = 300, height = 10, width = 17)
+```
