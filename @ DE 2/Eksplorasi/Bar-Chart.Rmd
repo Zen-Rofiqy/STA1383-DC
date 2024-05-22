@@ -44,19 +44,14 @@ install_load <- function (package1, ...)  {
 
 path <- function() gsub  ( "\\\\",  "/",  readClipboard ()  )
 
-install_load("readxl","ggplot2","dplyr")
+install_load("ggplot2","dplyr","rio")
 
-export.chart <- "C:/Users/Fathan/Documents/Obsidian Vault/2. Kuliah/Smt 6/4. Data Challange/@ DE 2/Eksplorasi/Chart"
-```
-
-```{r , include=FALSE, echo=FALSE, warning=FALSE, message = FALSE}
-#Set Working Directory
-require("knitr")
-opts_knit$set(root.dir = "C:/Users/Fathan/Documents/Obsidian Vault/2. Kuliah/Smt 6/4. Data Challange/@ DE 2/Eksplorasi")
+export.chart <- here::here()
 ```
 
 ```{r}
-data <- read_excel("Data.xlsx") %>% as.data.frame()
+data <- import("Data.xlsx") %>% 
+  as.data.frame()
 head(data, n=10)
 ```
 
