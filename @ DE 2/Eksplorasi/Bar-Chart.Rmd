@@ -46,12 +46,11 @@ path <- function() gsub  ( "\\\\",  "/",  readClipboard ()  )
 
 install_load("ggplot2","dplyr","rio")
 
-export.chart <- here::here()
+export.chart <- "C:/Users/Fathan/Downloads/File"
 ```
 
 ```{r}
-data <- import("Data.xlsx") %>% 
-  as.data.frame()
+data <- import("https://raw.githubusercontent.com/Zen-Rofiqy/STA1383-DC/main/%40%20DE%202/Eksplorasi/Data.csv") %>% as.data.frame()
 head(data, n=10)
 ```
 
